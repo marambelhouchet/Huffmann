@@ -10,6 +10,9 @@
       padding: 0;
       background: #f4f7fb;
       color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     header {
       background: #005f99;
@@ -24,7 +27,7 @@
       background: white;
       border-radius: 10px;
       box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      display: none; /* cacher toutes les sections par défaut */
+      display: none;
     }
     h2 {
       color: #005f99;
@@ -37,7 +40,7 @@
       text-align: center;
       padding: 15px;
       background: #eee;
-      margin-top: 30px;
+      margin-top: auto;
       font-size: 14px;
     }
     code {
@@ -63,6 +66,29 @@
     .buttons button:hover {
       background: #003f66;
     }
+    /* STYLE SPÉCIAL POUR PRINCIPE */
+    #principe {
+      display: flex; /* visible au chargement */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 60vh;
+      font-size: 1.3em;
+      line-height: 1.6;
+    }
+    #principe h2 {
+      font-size: 2em;
+    }
+    /* Etapes technique + avantages/inconvenients */
+    .etape, .avantage, .inconvenient {
+      display: none;
+      margin: 10px 0;
+      padding: 10px;
+      background: #f0f8ff;
+      border-left: 5px solid #005f99;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
@@ -87,35 +113,49 @@
       des <strong>codes plus longs aux symboles rares</strong>.  
       Ainsi, la longueur totale du message compressé est réduite.
     </p>
+      <img src="https://i.ytimg.com/vi/915H9d5U7_E/sddefault.jpg" 
+       alt="Illustration du codage de Huffman" 
+       class="principe-img">
   </section>
 
   <section id="technique">
     <h2>Technique</h2>
-    <ul>
-      <li>1️⃣ Compter la fréquence de chaque caractère dans le message.</li>
-      <li>2️⃣ Construire un <strong>arbre binaire de Huffman</strong> en fusionnant les nœuds les moins fréquents.</li>
-      <li>3️⃣ Attribuer un code binaire : <code>0</code> pour la branche gauche, <code>1</code> pour la droite.</li>
-      <li>4️⃣ Lire les codes binaires pour chaque caractère.</li>
-      <li>5️⃣ Remplacer le texte original par sa version compressée.</li>
-    </ul>
+    <div class="buttons">
+      <button onclick="showEtape(1)">Étape 1</button>
+      <button onclick="showEtape(2)">Étape 2</button>
+      <button onclick="showEtape(3)">Étape 3</button>
+      <button onclick="showEtape(4)">Étape 4</button>
+      <button onclick="showEtape(5)">Étape 5</button>
+    </div>
+    <div id="etape1" class="etape">1️⃣ Compter la fréquence de chaque caractère dans le message.</div>
+    <div id="etape2" class="etape">2️⃣ Construire un <strong>arbre binaire de Huffman</strong> en fusionnant les nœuds les moins fréquents.</div>
+    <div id="etape3" class="etape">3️⃣ Attribuer un code binaire : <code>0</code> pour la branche gauche, <code>1</code> pour la droite.</div>
+    <div id="etape4" class="etape">4️⃣ Lire les codes binaires pour chaque caractère.</div>
+    <div id="etape5" class="etape">5️⃣ Remplacer le texte original par sa version compressée.</div>
   </section>
 
   <section id="avantages">
     <h2>Avantages</h2>
-    <ul>
-      <li>Compression efficace pour les fichiers texte ou avec symboles redondants.</li>
-      <li>Algorithme simple à implémenter.</li>
-      <li>Sans perte : on peut retrouver exactement le message original.</li>
-    </ul>
+    <div class="buttons">
+      <button onclick="showAvantage(1)">Avantage 1</button>
+      <button onclick="showAvantage(2)">Avantage 2</button>
+      <button onclick="showAvantage(3)">Avantage 3</button>
+    </div>
+    <div id="avantage1" class="avantage">✔️ Compression efficace pour les fichiers texte ou avec symboles redondants.</div>
+    <div id="avantage2" class="avantage">✔️ Algorithme simple à implémenter.</div>
+    <div id="avantage3" class="avantage">✔️ Sans perte : on peut retrouver exactement le message original.</div>
   </section>
 
   <section id="inconvenients">
     <h2>Inconvénients</h2>
-    <ul>
-      <li>Moins efficace si tous les symboles apparaissent avec la même fréquence.</li>
-      <li>Demande un dictionnaire de codes (arbre) pour décoder.</li>
-      <li>Pas optimal pour des données déjà compressées.</li>
-    </ul>
+    <div class="buttons">
+      <button onclick="showInconvenient(1)">Inconvénient 1</button>
+      <button onclick="showInconvenient(2)">Inconvénient 2</button>
+      <button onclick="showInconvenient(3)">Inconvénient 3</button>
+    </div>
+    <div id="inconvenient1" class="inconvenient">⚠️ Moins efficace si tous les symboles apparaissent avec la même fréquence.</div>
+    <div id="inconvenient2" class="inconvenient">⚠️ Demande un dictionnaire de codes (arbre) pour décoder.</div>
+    <div id="inconvenient3" class="inconvenient">⚠️ Pas optimal pour des données déjà compressées.</div>
   </section>
 
   <section id="exemple">
@@ -131,30 +171,43 @@
     </ul>
     <h3>Étape 2 : Codes attribués</h3>
     <p>
-      Exemple de codage possible (dépend de l’arbre) :<br>
-      A = <code>0</code><br>
-      B = <code>110</code><br>
-      R = <code>111</code><br>
-      C = <code>100</code><br>
-      D = <code>101</code>
+      Codage selon l'arbre :<br>
+      A = <code>1</code><br>
+      B = <code>01</code><br>
+      R = <code>001</code><br>
+      C = <code>0001</code><br>
+      D = <code>0000</code>
     </p>
     <h3>Étape 3 : Encodage</h3>
     <p>
       "ABRACADABRA" devient : <br>
-      <code>0 110 111 0 100 0 101 0 110 111 0</code>
+      <code> 1 01 001 1 0001 1 0000 1 01 001 1</code>
     </p>
     <p>
       ➝ Le message compressé occupe <strong>moins de bits</strong> que l’ASCII classique.
     </p>
   </section>
 
-
-
   <script>
     function showSection(id) {
       const sections = document.querySelectorAll('section');
-      sections.forEach(sec => sec.style.display = 'none'); // cacher toutes
-      document.getElementById(id).style.display = 'block'; // afficher celle sélectionnée
+      sections.forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+    function showEtape(num) {
+      const etapes = document.querySelectorAll('.etape');
+      etapes.forEach(e => e.style.display = 'none');
+      document.getElementById('etape' + num).style.display = 'block';
+    }
+    function showAvantage(num) {
+      const avs = document.querySelectorAll('.avantage');
+      avs.forEach(a => a.style.display = 'none');
+      document.getElementById('avantage' + num).style.display = 'block';
+    }
+    function showInconvenient(num) {
+      const incs = document.querySelectorAll('.inconvenient');
+      incs.forEach(i => i.style.display = 'none');
+      document.getElementById('inconvenient' + num).style.display = 'block';
     }
   </script>
 </body>
