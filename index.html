@@ -19,6 +19,21 @@
       color: white;
       padding: 20px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #matrix-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.3;
+    }
+    .header-content {
+      position: relative;
+      z-index: 2;
     }
     section {
       max-width: 900px;
@@ -115,8 +130,11 @@
 </head>
 <body>
   <header>
-    <h1>Codage de Huffman</h1>
-    <p>Principe • Technique • Avantages • Inconvénients • Exemple</p>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="header-content">
+      <h1>Codage de Huffman</h1>
+      <p>Principe • Technique • Avantages • Inconvénients • Exemple</p>
+    </div>
   </header>
 
   <div class="buttons">
@@ -253,6 +271,63 @@
       incs.forEach(i => i.style.display = 'none');
       document.getElementById('inconvenient' + num).style.display = 'block';
     }
+
+    // Animation Matrix pour le header
+    function initMatrix() {
+      const canvas = document.getElementById('matrix-canvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Redimensionner le canvas
+      function resizeCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      const binary = '01';
+      const fontSize = 14;
+      const columns = canvas.width / fontSize;
+      const drops = [];
+      
+      // Initialiser les gouttes
+      for (let i = 0; i < columns; i++) {
+        drops[i] = 1;
+      }
+      
+      function draw() {
+        // Fond semi-transparent pour créer l'effet de traînée
+        ctx.fillStyle = 'rgba(0, 95, 153, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Style du texte
+        ctx.fillStyle = '#00ff41';
+        ctx.font = fontSize + 'px monospace';
+        
+        for (let i = 0; i < drops.length; i++) {
+          // Choisir aléatoirement 0 ou 1
+          const text = binary[Math.floor(Math.random() * binary.length)];
+          
+          // Dessiner le caractère
+          ctx.fillStyle = `rgba(0, 255, 65, ${Math.random() * 0.8 + 0.2})`;
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          
+          // Réinitialiser la goutte quand elle atteint le bas
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          
+          drops[i]++;
+        }
+      }
+      
+      // Animer
+      setInterval(draw, 50);
+    }
+    
+    // Démarrer l'animation quand la page est chargée
+    window.addEventListener('load', initMatrix);
   </script>
 </body>
 </html>
