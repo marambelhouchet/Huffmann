@@ -81,8 +81,8 @@
     .buttons button:hover {
       background: #003f66;
     }
-    /* STYLE SPÉCIAL POUR PRINCIPE ET EXEMPLE */
-    #principe, #exemple {
+    /* STYLE SPÉCIAL POUR PRINCIPE */
+    #principe {
       display: flex; /* visible au chargement */
       flex-direction: column;
       justify-content: center;
@@ -92,7 +92,21 @@
       font-size: 1.3em;
       line-height: 1.6;
     }
-    #principe h2, #exemple h2 {
+    /* STYLE SPÉCIAL POUR EXEMPLE - masqué par défaut */
+    #exemple {
+      display: none; /* masqué par défaut */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 60vh;
+      font-size: 1.3em;
+      line-height: 1.6;
+    }
+    #principe h2 {
+      font-size: 2em;
+    }
+    #exemple h2 {
       font-size: 2em;
     }
     .principe-img {
